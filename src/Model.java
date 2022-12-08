@@ -51,7 +51,7 @@ public class Model {
     private boolean compressTiles(Tile[] tiles) {
         boolean isChanged = false;
 
-        for (int count = 0; count < 3; count++) {
+        for (int count = 0; count < FIELD_WIDTH - 1; count++) {
             for (int i = 0; i < tiles.length; i++) {
                 if (tiles[i].isEmpty() && i != tiles.length - 1 && !tiles[i+1].isEmpty()) {
                     tiles[i] = tiles[i + 1];
@@ -100,5 +100,40 @@ public class Model {
         if (changed){
             addTile();
         }
+    }
+
+    public void right(){
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+        left();
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+    }
+
+    public void down(){
+        gameTiles = rotate90(gameTiles);
+        left();
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+    }
+
+    public void up(){
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+        gameTiles = rotate90(gameTiles);
+        left();
+        gameTiles = rotate90(gameTiles);
+    }
+
+    private Tile[][] rotate90(Tile[][] gameTiles) {
+        Tile[][] tempGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                tempGameTiles[i][FIELD_WIDTH - 1 - j] = gameTiles[j][i];
+            }
+        }
+
+        return tempGameTiles;
     }
 }
