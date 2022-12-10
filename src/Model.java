@@ -5,7 +5,7 @@ import java.util.*;
 public class Model {
     private static final int FIELD_WIDTH = 4;
     private Tile[][] gameTiles;
-    private int score = 0;
+    int score = 0;
     private int maxTile = 0;
 
     public Model() {
@@ -135,5 +135,28 @@ public class Model {
         }
 
         return tempGameTiles;
+    }
+
+    public Tile[][] getGameTiles() {
+        return gameTiles;
+    }
+
+    public boolean canMove(){
+        if (!(getEmptyTiles().size() == 0)){
+            return true;
+        }
+
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                Tile testTile = gameTiles[i][j];
+
+                if ((i < FIELD_WIDTH - 1 && testTile.value == gameTiles[i+1][j].value)
+                        || (j < FIELD_WIDTH - 1 && testTile.value == gameTiles[i][j+1].value)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
