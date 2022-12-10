@@ -4,6 +4,9 @@ import java.util.*;
 
 public class Model {
     private static final int FIELD_WIDTH = 4;
+    private Stack<Tile[][]> previousStates = new Stack<>();
+    private Stack<Integer> previousScores = new Stack<>();
+    private boolean isSaveNeeded = true;
     private Tile[][] gameTiles;
     int score = 0;
     int maxTile = 0;
@@ -156,5 +159,26 @@ public class Model {
         }
 
         return false;
+    }
+
+    private void saveState(Tile[][] gameTiles){
+        Tile[][] tempGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                tempGameTiles[i][j] = gameTiles[i][j];
+            }
+        }
+        previousStates.push(tempGameTiles);
+
+        previousScores.push(score);
+
+        isSaveNeeded = false;
+    }
+
+    public void rollback(){
+        if (!previousStates.isEmpty() && !previousScores.isEmpty()) {
+            gameTiles = previousStates.pop();
+            score = previousScores.pop();
+        }
     }
 }

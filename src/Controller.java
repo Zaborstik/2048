@@ -46,12 +46,16 @@ public class Controller extends KeyAdapter {
             switch (e.getKeyCode()){
                 case KeyEvent.VK_LEFT:
                     model.left();
+                    break;
                 case KeyEvent.VK_RIGHT:
                     model.right();
+                    break;
                 case KeyEvent.VK_UP:
                     model.up();
+                    break;
                 case KeyEvent.VK_DOWN:
                     model.down();
+                    break;
             }
         }
 
