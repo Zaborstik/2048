@@ -34,12 +34,10 @@ public class Model {
     }
 
     private List<Tile> getEmptyTiles(){
-        List<Tile> emptyTiles = new ArrayList<>();
+        final List<Tile> emptyTiles = new ArrayList<>();
 
-        for (Tile[] tileArray :
-                gameTiles) {
-            for (Tile tile :
-                    tileArray) {
+        for (Tile[] tileArray : gameTiles) {
+            for (Tile tile : tileArray) {
                 if(tile.isEmpty()){
                     emptyTiles.add(tile);
                 }
@@ -69,7 +67,7 @@ public class Model {
         boolean isChanged = false;
 
         for (int i = 0; i < tiles.length; i++) {
-            if (i == tiles.length - 1) break;
+            if (i == tiles.length - 1) continue;
 
             if ((tiles[i].value != 0) && (tiles[i].value == tiles[i + 1].value)){
                 tiles[i].value = tiles[i].value * 2;
@@ -130,7 +128,7 @@ public class Model {
         Tile[][] tempGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
         for (int i = 0; i < FIELD_WIDTH; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
-                tempGameTiles[i][FIELD_WIDTH - 1 - j] = gameTiles[j][i];
+                tempGameTiles[i][FIELD_WIDTH - j - 1] = gameTiles[j][i];
             }
         }
 

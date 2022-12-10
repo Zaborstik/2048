@@ -21,6 +21,10 @@ public class Controller extends KeyAdapter {
         return model.score;
     }
 
+    public View getView() {
+        return view;
+    }
+
     public void resetGame(){
         model.score = 0;
         view.isGameWon = false;
