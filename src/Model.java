@@ -6,7 +6,7 @@ public class Model {
     private static final int FIELD_WIDTH = 4;
     private Tile[][] gameTiles;
     int score = 0;
-    private int maxTile = 0;
+    int maxTile = 0;
 
     public Model() {
         resetGameTiles();
