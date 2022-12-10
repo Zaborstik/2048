@@ -90,20 +90,27 @@ public class Model {
     }
 
     public void left(){
+        if (isSaveNeeded) {
+            saveState(gameTiles);
+        }
+
         boolean changed = false;
 
         for (Tile[] tileArray : gameTiles) {
-            if (compressTiles(tileArray) | mergeTiles(tileArray)){
+            if (compressTiles(tileArray) | mergeTiles(tileArray)) {
                 changed = true;
             }
         }
 
-        if (changed){
+        if (changed) {
             addTile();
         }
+
+        isSaveNeeded = true;
     }
 
-    public void right(){
+    public void right() {
+        saveState(gameTiles);
         gameTiles = rotate90(gameTiles);
         gameTiles = rotate90(gameTiles);
         left();
@@ -111,7 +118,8 @@ public class Model {
         gameTiles = rotate90(gameTiles);
     }
 
-    public void down(){
+    public void down() {
+        saveState(gameTiles);
         gameTiles = rotate90(gameTiles);
         left();
         gameTiles = rotate90(gameTiles);
@@ -120,6 +128,7 @@ public class Model {
     }
 
     public void up(){
+        saveState(gameTiles);
         gameTiles = rotate90(gameTiles);
         gameTiles = rotate90(gameTiles);
         gameTiles = rotate90(gameTiles);
@@ -165,7 +174,7 @@ public class Model {
         Tile[][] tempGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
         for (int i = 0; i < FIELD_WIDTH; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
-                tempGameTiles[i][j] = gameTiles[i][j];
+                tempGameTiles[i][j] = new Tile(gameTiles[i][j].value);
             }
         }
         previousStates.push(tempGameTiles);
@@ -177,8 +186,8 @@ public class Model {
 
     public void rollback(){
         if (!previousStates.isEmpty() && !previousScores.isEmpty()) {
-            gameTiles = previousStates.pop();
             score = previousScores.pop();
+            gameTiles = previousStates.pop();
         }
     }
 }
